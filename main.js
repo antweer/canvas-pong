@@ -10,7 +10,7 @@ class Paddle {
     this.width = 20;
     this.height = 150;
     this.color = 'black';
-    this.dy = 10;
+    this.dy = 5;
 
   }
 
@@ -35,8 +35,8 @@ class Ball {
   constructor (x, y) {
     this.x = x;
     this.y = y;
-    this.dx = 8;
-    this.dy = 8;
+    this.dx = 7;
+    this.dy = 7;
     this.radius = 20;
     this.color = 'black';
   }
