@@ -18,8 +18,8 @@ class DrawRectangle {
   }
 }
 
-// defines Circle object
-class Circle {
+// defines Ball object
+class Ball {
   constructor (x, y, dx, dy, radius) {
     this.x = x;
     this.y = y;
