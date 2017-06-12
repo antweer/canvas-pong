@@ -2,15 +2,17 @@
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
+canvas.style.background = 'black';
+
 //defines Paddles
 class Paddle {
-  constructor(x, y) {
+  constructor(x, y, dy) {
     this.x = x;
     this.y = y;
     this.width = 20;
     this.height = 150;
-    this.color = 'black';
-    this.dy = 5;
+    this.color = 'white';
+    this.dy = dy;
 
   }
 
@@ -38,7 +40,7 @@ class Ball {
     this.dx = 7;
     this.dy = 7;
     this.radius = 20;
-    this.color = 'black';
+    this.color = 'white';
   }
 
   update() {
@@ -86,8 +88,8 @@ canvas.height = window.innerHeight;
 // });
 
 //Game logic
-var player = new Paddle(10, (canvas.height/2)-75);
-var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75);
+var player = new Paddle(10, (canvas.height/2)-75, 8);
+var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
 var ball = new Ball(canvas.width/2, canvas.height/2)
 player.draw();
 ai.draw();
