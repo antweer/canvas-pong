@@ -84,22 +84,27 @@ var ball = new Ball(canvas.width/2, canvas.height/2)
 player.draw();
 ai.draw();
 
-var dy;
+var dy, aidy;
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     window.addEventListener('mousemove', function(event) {
-      if (event.offsetY > player.y + (3*player.height)/4) {
+      if (event.offsetY > player.y + player.height) {
         dy = player.dy;
       }
-      else if (event.offsetY < (4*player.y)/3) {
+      else if (event.offsetY < player.y) {
         dy = -player.dy;
       } else {
         dy = 0;
       }
     });
     player.draw(dy);
-    ai.draw();
+    if(ball.y > ai.y + ai.height/2){
+      aidy = ai.dy;
+    } else {
+      aidy = -ai.dy;
+    }
+    ai.draw(aidy);
     ball.update();
 }
 
