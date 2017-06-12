@@ -38,20 +38,20 @@ class Ball {
   constructor (x, y) {
     this.x = x;
     this.y = y;
-    this.dx = 7;
-    this.dy = 7;
+    this.dx = 6;
+    this.dy = 6;
     this.radius = 20;
     this.color = 'white';
   }
 
   update() {
-      if (this.x - this.radius <= player.x + player.width && this.x - this.radius >= 0
+      if (this.x - this.radius <= player.x + player.width && this.x - this.radius >= player.x
         && this.y + this.radius >= player.y && this.y + this.radius <= player.y + player.height) {
         this.dy = this.dy + player.dy;
         this.dx = -this.dx;
         console.log('HIT');
       }
-      if (this.x + this.radius >= ai.x && this.x - this.radius <= canvas.width
+      if (this.x + this.radius >= ai.x && this.x - this.radius <= canvas.width - (ai.width + 10)
         && this.y + this.radius >= ai.y && this.y + this.radius <= ai.y + ai.height) {
         this.dy = this.dy + player.dy;
         this.dx = -this.dx;
@@ -90,7 +90,7 @@ canvas.height = window.innerHeight;
 
 //Game logic
 var player = new Paddle(10, (canvas.height/2)-75, 8);
-var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
+var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75, 9);
 var ball = new Ball(canvas.width/2, canvas.height/2)
 player.draw();
 ai.draw();
@@ -121,10 +121,12 @@ function animate() {
       }
     });
     player.draw(player.dy);
-    if(ball.y > ai.y + ai.height/2){
+    if (ball.y > ai.y + ai.height/2 && ball.dx > 0) {
       aidy = ai.speed;
-    } else {
+    } else if (ball.y < ai.y + ai.height/2 && ball.dx > 0) {
       aidy = -ai.speed;
+    } else {
+      aidy = 0;
     }
     ai.draw(aidy);
     ball.update();
