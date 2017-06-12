@@ -107,6 +107,9 @@ function animate() {
         player.dy = -player.speed;
       }
     });
+    window.addEventListener('touchend', function(event) {
+      player.dy = 0;
+    });
     window.addEventListener('keydown', function(event){
       if (event.keyCode == 38) {
         player.dy = -player.speed;
