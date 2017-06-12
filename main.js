@@ -10,7 +10,7 @@ class Paddle {
     this.width = 20;
     this.height = 150;
     this.color = 'black';
-    this.dy = 5;
+    this.dy = 10;
 
   }
 
