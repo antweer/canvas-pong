@@ -10,7 +10,7 @@ class Paddle {
     this.width = 20;
     this.height = 150;
     this.color = 'black';
-    this.dy = 5;
+    this.dy = 10;
 
   }
 
@@ -88,10 +88,10 @@ function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     window.addEventListener('mousemove', function(event) {
-      if (event.offsetY > player.y + player.height) {
+      if (event.offsetY > player.y + (3*player.height)/4) {
         dy = player.dy;
       }
-      else if (event.offsetY < player.y) {
+      else if (event.offsetY < (3*player.y)/4) {
         dy = -player.dy;
       } else {
         dy = 0;
