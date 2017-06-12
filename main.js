@@ -2,24 +2,25 @@
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
-class DrawRectangle {
+//defines Paddles
+class Paddle {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    var width = 100;
-    var height = 200;
-    var color = 'black';
-    var dy = 5;
+    this.width = 25;
+    this.height = 200;
+    this.color = 'black';
+    this.dy = 5;
   }
 
   draw (y = 0){
-    ctx.fillStyle = color;
-    ctx.fillRect(this.x, this.y + y, width, height);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y + y, this.width, this.height);
   }
 }
 
-// defines Circle object
-class Circle {
+// defines Ball object
+class Ball {
   constructor (x, y, dx, dy, radius) {
     this.x = x;
     this.y = y;
@@ -48,7 +49,7 @@ class Circle {
   }
 
 // set canvas width and height to width and height of screen
-canvas.width = window.innerWidth;
+canvas.width = window.innerWidth - 25;
 canvas.height = window.innerHeight;
 
 // resize canvas on screen resize
@@ -59,3 +60,7 @@ window.addEventListener('resize', function() {
 });
 
 //Game logic
+var player = new Paddle(0, (canvas.height/2)-100);
+var ai = new Paddle(canvas.width - 25, (canvas.height/2)-100);
+player.draw();
+ai.draw();
