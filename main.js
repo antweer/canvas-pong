@@ -11,43 +11,57 @@ class Paddle {
     this.height = 150;
     this.color = 'black';
     this.dy = 5;
+
   }
 
   draw (dy = 0){
     ctx.fillStyle = this.color;
-    if  (this.y + this.height <= canvas.height && player.y >= 0){
+
+    if  (this.y + this.height <= canvas.height && this.y >= 0){
       this.y = this.y + dy;
-    } 
+    }
+    else if(this.y <= 0){
+      this.y = 0;
+    }
+    else{
+      this.y = canvas.height - this.height;
+    }
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
 // defines Ball object
 class Ball {
-  constructor (x, y, dx, dy, radius) {
+  constructor (x, y) {
     this.x = x;
     this.y = y;
-    this.dx = 10;
-    this.dy = 10;
-    this.radius = 100;
-    var color = 'black';
+    this.dx = 8;
+    this.dy = 8;
+    this.radius = 20;
+    this.color = 'black';
   }
 
   update() {
-      if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+      if (this.x - this.radius <= player.x + player.width && this.y + this.radius >= player.y && this.y + this.radius <= player.y + player.height) {
+        // this.dy = this.dy - player.dy;
+        this.dx = -this.dx;
+        console.log('HIT');
+      }
+      if (this.x + this.radius > canvas.width) {
         this.dx = -this.dx;
         console.log('GAME OVER');
       }
       if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
         this.dy = -this.dy
       }
+
       this.x += this.dx;
       this.y += this.dy;
 
-      context.beginPath();
-      context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-      context.fillStyle = color;
-      context.fill();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+      ctx.fillStyle = this.color;
+      ctx.fill();
     }
   }
 
@@ -65,6 +79,7 @@ canvas.height = window.innerHeight;
 //Game logic
 var player = new Paddle(10, (canvas.height/2)-75);
 var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75);
+var ball = new Ball(canvas.width/2, canvas.height/2)
 player.draw();
 ai.draw();
 
@@ -84,6 +99,7 @@ function animate() {
     });
     player.draw(dy);
     ai.draw();
+    ball.update();
 }
 
 animate();
