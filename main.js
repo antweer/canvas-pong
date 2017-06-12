@@ -10,13 +10,19 @@ class Paddle {
     this.width = 20;
     this.height = 150;
     this.color = 'black';
-    this.dy = 2;
+    this.dy = 10;
   }
 
   draw (dy = 0){
     ctx.fillStyle = this.color;
-    if  (this.y + this.height <= canvas.height || player.y >= 0){
+    if  (this.y + this.height <= canvas.height && this.y >= 0){
       this.y = this.y + dy;
+    }
+    else if(this.y <= 0){
+      this.y = 0;
+    }
+    else{
+      this.y = canvas.height - this.height;
     }
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
