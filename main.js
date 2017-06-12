@@ -92,7 +92,7 @@ function animate() {
       if (event.offsetY > player.y + (3*player.height)/4) {
         dy = player.dy;
       }
-      else if (event.offsetY < (3*player.y)/4) {
+      else if (event.offsetY < (4*player.y)/3) {
         dy = -player.dy;
       } else {
         dy = 0;
