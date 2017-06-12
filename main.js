@@ -99,7 +99,7 @@ var dy, aidy;
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    window.addEventListener('mousemove', function(event) {
+    window.addEventListener('touchmove', function(event) {
       if (event.offsetY > player.y + player.height/2) {
         player.dy = player.speed;
       }
