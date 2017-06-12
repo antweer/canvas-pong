@@ -10,12 +10,14 @@ class Paddle {
     this.width = 20;
     this.height = 150;
     this.color = 'black';
-    this.dy = 5;
+    this.dy = 2;
   }
 
-  draw (y = 0){
+  draw (dy = 0){
     ctx.fillStyle = this.color;
-    this.y = this.y + y;
+    if  (this.y + this.height <= canvas.height || player.y >= 0){
+      this.y = this.y + dy;
+    }
     ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
@@ -66,16 +68,22 @@ var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75);
 player.draw();
 ai.draw();
 
+var dy;
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     window.addEventListener('mousemove', function(event) {
-      if (event.offsetY > player.y) {
-        player.draw(-1);
+      if (event.offsetY > player.y + player.height) {
+        dy = player.dy;
+      }
+      else if (event.offsetY < player.y) {
+        dy = -player.dy;
+      } else {
+        dy = 0;
       }
     });
-    player.draw();
+    player.draw(dy);
     ai.draw();
-
 }
+
 animate();
