@@ -48,9 +48,17 @@ class Ball {
         this.dx = -this.dx;
         console.log('HIT');
       }
-      if (this.x + this.radius > canvas.width) {
+      if (this.x + this.radius >= ai.x && this.x - this.radius <= canvas.width
+        && this.y + this.radius >= ai.y && this.y + this.radius <= ai.y + ai.height) {
+        // this.dy = this.dy - player.dy;
         this.dx = -this.dx;
-        console.log('GAME OVER');
+        console.log('AI HIT');
+      }
+      if (this.x + this.radius > canvas.width) {
+        console.log('Player Wins');
+      }
+      if (this.x - this.radius < 0) {
+        console.log('Bot Wins');
       }
       if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
         this.dy = -this.dy
