@@ -7,15 +7,16 @@ class Paddle {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.width = 25;
-    this.height = 200;
+    this.width = 20;
+    this.height = 150;
     this.color = 'black';
     this.dy = 5;
   }
 
   draw (y = 0){
     ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y + y, this.width, this.height);
+    this.y = this.y + y;
+    ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
@@ -49,18 +50,32 @@ class Ball {
   }
 
 // set canvas width and height to width and height of screen
-canvas.width = window.innerWidth - 25;
+canvas.width = window.innerWidth - 15;
 canvas.height = window.innerHeight;
 
 // resize canvas on screen resize
-window.addEventListener('resize', function() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  draw();
-});
+// window.addEventListener('resize', function() {
+//   canvas.width = window.innerWidth;
+//   canvas.height = window.innerHeight;
+//   draw();
+// });
 
 //Game logic
-var player = new Paddle(0, (canvas.height/2)-100);
-var ai = new Paddle(canvas.width - 25, (canvas.height/2)-100);
+var player = new Paddle(10, (canvas.height/2)-75);
+var ai = new Paddle(canvas.width - 30, (canvas.height/2)-75);
 player.draw();
 ai.draw();
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    window.addEventListener('mousemove', function(event) {
+      if (event.offsetY > player.y) {
+        player.draw(-1);
+      }
+    });
+    player.draw();
+    ai.draw();
+
+}
+animate();
