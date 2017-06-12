@@ -46,13 +46,13 @@ class Ball {
 
   update() {
       if (this.x - this.radius <= player.x + player.width && this.x - this.radius >= player.x
-        && this.y + this.radius >= player.y && this.y + this.radius <= player.y + player.height) {
+        && this.y + this.radius >= player.y && this.y - this.radius <= player.y + player.height) {
         this.dy = this.dy + player.dy;
         this.dx = -this.dx;
         console.log('HIT');
       }
       if (this.x + this.radius >= ai.x && this.x - this.radius <= canvas.width - (ai.width + 10)
-        && this.y + this.radius >= ai.y && this.y + this.radius <= ai.y + ai.height) {
+        && this.y + this.radius >= ai.y && this.y - this.radius <= ai.y + ai.height) {
         this.dy = this.dy + player.dy;
         this.dx = -this.dx;
         console.log('AI HIT');
