@@ -106,6 +106,19 @@ function animate() {
         dy = 0;
       }
     });
+    window.addEventListener('keydown', function(event){
+      if (event.keyCode == 38) {
+        dy = -player.dy;
+      }
+      else if(event.keyCode == 40) {
+        dy = player.dy;
+      }
+    });
+    window.addEventListener('keyup', function(event){
+      if (event.keyCode == 38 || event.keyCode == 40) {
+        dy = 0;
+      }
+    });
     player.draw(dy);
     if(ball.y > ai.y + ai.height/2){
       aidy = ai.dy;
