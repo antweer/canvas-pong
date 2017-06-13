@@ -15,15 +15,19 @@ app.get('/', function (request, response) {
 
 io.on('connection', function(client){
   console.log('CONNECTED', client.id);
-  
+
   client.on('up', function(){
-    io.emit('up');
+    client.broadcast.emit('up');
   });
-  
+
   client.on('down', function(){
-    io.emit('down');
+    client.broadcast.emit('down');
   });
-  
+
+  client.on('stop', function(){
+    client.broadcast.emit('stop');
+  });
+
   client.on('disconnect', function () {
     console.log('EXITED');
   });
