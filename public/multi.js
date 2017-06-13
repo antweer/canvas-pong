@@ -3,6 +3,13 @@ var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 var p1score = 0;
 var p2score = 0;
+var currentPlayer;
+
+// set canvas width and height to width and height of screen
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+canvas.style.background = 'black';
 
 // setup socketio
 var socket = io();
@@ -19,8 +26,6 @@ socket.on('stop', function() {
   player2.stop();
   console.log('you pressed down');
 });
-
-canvas.style.background = 'black';
 
 //defines Paddles
 class Paddle {
@@ -111,18 +116,6 @@ class Ball {
     }
   }
 
-// set canvas width and height to width and height of screen
-canvas.width = window.innerWidth - 10;
-canvas.height = window.innerHeight - 10;
-
-//Game logic
-var player1 = new Paddle(10, (canvas.height/2)-75, 8);
-var player2 = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
-var ball = new Ball(canvas.width/2, canvas.height/2)
-player1.draw();
-player2.draw();
-
-
 // listener section
 window.addEventListener('touchmove', function(event) {
   if (event.offsetY > player1.y + player1.height/2) {
@@ -152,22 +145,19 @@ window.addEventListener('keyup', function(event){
   }
 });
 
+//Game logic
+var player1 = new Paddle(10, (canvas.height/2)-75, 8);
+var player2 = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
+var ball = new Ball(canvas.width/2, canvas.height/2)
+player1.draw();
+player2.draw();
+
+// game loop
 function animate() {
-    // change for 2 player
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
     player1.draw(player1.dy);
-
-    // bot logic
-    // if (ball.y > player2.y + player2.height/2 && ball.dx > 0) {
-    //   player2dy = player2.speed;
-    // } else if (ball.y < player2.y + player2.height/2 && ball.dx > 0) {
-    //   player2dy = -player2.speed;
-    // } else {
-    //   player2dy = 0;
-    // }
 
     player2.draw(player2.dy);
     ball.update();
