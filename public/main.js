@@ -64,12 +64,14 @@ class Ball {
         playerscore += 1
         this.x = canvas.width/2
         this.y = canvas.height/2
+        this.dy = Math.floor(this.dy*Math.random());
       }
       if (this.x - this.radius < 0) {
         console.log('Bot Wins');
         aiscore += 1
         this.x = canvas.width/2
         this.y = canvas.height/2
+        this.dy = Math.floor(this.dy*Math.random());
       }
       if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
         this.dy = -this.dy

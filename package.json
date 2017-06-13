@@ -1,0 +1,29 @@
+{
+  "name": "canvas-pong",
+  "version": "1.0.0",
+  "description": "Pong clone in canvas",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antweer/canvas-pong.git"
+  },
+  "author": [
+    "Tanweer Rajwani",
+    "JJ Spetseris"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antweer/canvas-pong/issues"
+  },
+  "homepage": "https://github.com/antweer/canvas-pong#readme",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "express": "^4.15.3",
+    "hbs": "^4.0.1",
+    "nodemon": "^1.11.0",
+    "socket.io": "^2.0.3"
+  }
+}
