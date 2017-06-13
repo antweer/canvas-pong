@@ -8,15 +8,15 @@ var p2score = 0;
 var socket = io();
 
 socket.on('up', function() {
-  player1.moveup();
+  player2.moveup();
   console.log('you pressed up');
 });
 socket.on('down', function() {
-  player1.movedown();
+  player2.movedown();
   console.log('you pressed down');
 });
 socket.on('stop', function() {
-  player1.stop();
+  player2.stop();
   console.log('you pressed down');
 });
 
@@ -152,7 +152,6 @@ window.addEventListener('keyup', function(event){
   }
 });
 
-var dy, player2dy;
 function animate() {
     // change for 2 player
     requestAnimationFrame(animate);
@@ -170,7 +169,7 @@ function animate() {
     //   player2dy = 0;
     // }
 
-    player2.draw(player2dy);
+    player2.draw(player2.dy);
     ball.update();
     ctx.font = "50px Arial"
     ctx.fillStyle = 'white';
