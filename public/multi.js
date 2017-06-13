@@ -158,9 +158,9 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     player1.draw(player1.dy);
-
     player2.draw(player2.dy);
     ball.update();
+
     ctx.font = "50px Arial"
     ctx.fillStyle = 'white';
     ctx.fillText(p1score, 100, 50);
