@@ -145,26 +145,35 @@ window.addEventListener('keyup', function(event){
   }
 });
 
+var start = document.getElementById('start');
+
 //Game logic
 var player1 = new Paddle(10, (canvas.height/2)-75, 8);
 var player2 = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
 var ball = new Ball(canvas.width/2, canvas.height/2)
-player1.draw();
-player2.draw();
 
-// game loop
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+start.addEventListener('click', function() {
+    // removes start button
+    start.style.display = 'none'
 
-    player1.draw(player1.dy);
-    player2.draw(player2.dy);
-    ball.update();
 
-    ctx.font = "50px Arial"
-    ctx.fillStyle = 'white';
-    ctx.fillText(p1score, 100, 50);
-    ctx.fillText(p2score, canvas.width - 100, 50);
-}
+    player1.draw();
+    player2.draw();
 
-animate();
+    // game loop
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        player1.draw(player1.dy);
+        player2.draw(player2.dy);
+        ball.update();
+
+        ctx.font = "50px Arial"
+        ctx.fillStyle = 'white';
+        ctx.fillText(p1score, 100, 50);
+        ctx.fillText(p2score, canvas.width - 100, 50);
+    }
+
+    animate();
+});

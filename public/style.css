@@ -1,0 +1,10 @@
+/*modal styling*/
+#start {
+  padding: 2%;
+  font-size: 18pt;
+  color: white;
+  text-align: center;
+  background-color: black;
+  border: 5px solid white;
+  border-radius: 5px;
+}
