@@ -13,6 +13,22 @@ app.get('/', function (request, response) {
   response.render('index.hbs');
 });
 
+io.on('connection', function(client){
+  console.log('CONNECTED', client.id);
+  
+  client.on('up', function(){
+    io.emit('up');
+  });
+  
+  client.on('down', function(){
+    io.emit('down');
+  });
+  
+  client.on('disconnect', function () {
+    console.log('EXITED');
+  });
+});
+
 http.listen(8000, function(){
   console.log('Listening on port 8000')
 });

@@ -4,6 +4,9 @@ var ctx = canvas.getContext('2d');
 var p1score = 0;
 var p2score = 0;
 
+// setup socketio
+var socket = io();
+
 canvas.style.background = 'black';
 
 //defines Paddles
@@ -113,9 +116,11 @@ function animate() {
     window.addEventListener('keydown', function(event){
       if (event.keyCode == 38) {
         player1.dy = -player1.speed;
+        socket.emit('up');
       }
       else if(event.keyCode == 40) {
         player1.dy = player1.speed;
+        socket.emit('down');
       }
     });
     window.addEventListener('keyup', function(event){
