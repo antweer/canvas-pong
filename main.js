@@ -1,6 +1,8 @@
 // setup canvas
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
+var playerscore = 0;
+var aiscore = 0;
 
 canvas.style.background = 'black';
 
@@ -59,9 +61,15 @@ class Ball {
       }
       if (this.x + this.radius > canvas.width) {
         console.log('Player Wins');
+        playerscore += 1
+        this.x = canvas.width/2
+        this.y = canvas.height/2
       }
       if (this.x - this.radius < 0) {
         console.log('Bot Wins');
+        aiscore += 1
+        this.x = canvas.width/2
+        this.y = canvas.height/2
       }
       if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
         this.dy = -this.dy
@@ -78,8 +86,8 @@ class Ball {
   }
 
 // set canvas width and height to width and height of screen
-canvas.width = window.innerWidth - 15;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth - 10;
+canvas.height = window.innerHeight - 10;
 
 // resize canvas on screen resize
 // window.addEventListener('resize', function() {
@@ -133,6 +141,10 @@ function animate() {
     }
     ai.draw(aidy);
     ball.update();
+    ctx.font = "50px Arial"
+    ctx.fillStyle = 'white';
+    ctx.fillText(playerscore, 100, 50);
+    ctx.fillText(aiscore, canvas.width - 100, 50);
 }
 
 animate();
