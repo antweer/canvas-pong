@@ -22,8 +22,6 @@ io.on('connection', function(client){
   console.log('CONNECTED', client.id);
   playerArr.push(client.id);
   client.emit('player' + playerArr.length);
-  players += 1;
-  io.emit('playerJoined', players);
 
   client.on('up', function(){
     client.broadcast.emit('up');
@@ -50,13 +48,15 @@ io.on('connection', function(client){
   });
 
   client.on('start', function() {
-    io.emit('start')
-  })
+    io.emit('start');
+    players += 1;
+    io.emit('playerJoined', players);
+  });
 
   client.on('disconnect', function () {
     console.log('EXITED');
     players -= 1;
-    io.emit('playerLeft');
+    io.emit('playerLeft', players);
     let index = playerArr.indexOf(client.id);
     if (index > -1) {
       playerArr.splice(index, 1);
