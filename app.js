@@ -46,6 +46,10 @@ io.on('connection', function(client){
     console.log('p2 scores');
   });
 
+  client.on('start', function() {
+    io.emit('start')
+  })
+
   client.on('disconnect', function () {
     console.log('EXITED');
     let index = playerArr.indexOf(client.id);
