@@ -49,13 +49,21 @@ io.on('connection', function(client){
 
   client.on('start', function() {
     io.emit('start');
-    players += 1;
+    if(players <= 0){
+      players = 1;
+    } else {
+      players += 1;
+    }
     io.emit('playerJoined', players);
   });
 
   client.on('disconnect', function () {
     console.log('EXITED');
-    players -= 1;
+    if(players < 1){
+      players = 0;
+    } else {
+      players -= 1;
+    }
     io.emit('playerLeft', players);
     let index = playerArr.indexOf(client.id);
     if (index > -1) {

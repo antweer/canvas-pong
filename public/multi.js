@@ -4,6 +4,7 @@ var ctx = canvas.getContext('2d');
 var p1score = 0;
 var p2score = 0;
 var currentPlayer;
+var gameText = 'Waiting on another player to join';
 
 // set canvas width and height to width and height of screen
 canvas.width = window.innerWidth;
@@ -19,6 +20,13 @@ socket.on('playerJoined', function(numPlayers){
   if(numPlayers > 1){
     ball.dy = 6;
     ball.dx = 6;
+    player1.x = 10;
+    player1.y = (canvas.height/2)-75;
+    player1.speed = 8;
+    player2.x = canvas.width - 30
+    player2.y = (canvas.height/2)-75;
+    player2.speed = 8;
+    gameText = '';
   }
 });
 
@@ -27,6 +35,15 @@ socket.on('playerLeft', function(numPlayers){
   if(numPlayers <= 1){
     ball.dy = 0;
     ball.dx = 0;
+    ball.x = canvas.width/2;
+    ball.y = canvas.height/2;
+    player1.x = 10;
+    player1.y = (canvas.height/2)-75;
+    player1.speed = 0;
+    player2.x = canvas.width - 30
+    player2.y = (canvas.height/2)-75;
+    player2.speed = 0;
+    gameText = 'Player has left. Waiting on another player to join.';
   }
 });
 
@@ -206,6 +223,7 @@ function gameLoop() {
       ctx.fillStyle = 'white';
       ctx.fillText(p1score, 100, 50);
       ctx.fillText(p2score, canvas.width - 100, 50);
+      ctx.fillText(gameText, 50, canvas.height - 100);
   }
 
   animate();
