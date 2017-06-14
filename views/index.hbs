@@ -3,11 +3,20 @@
 <head>
   <title>Pong</title>
   <style>
-    body{
+    html {
+      overflow: hidden;
+    }
+    body {
       margin: 0;
       padding: 0;
+      overflow: hidden;
+      position: relative;
     }
     #start {
+      position: absolute;
+      width: 120px;
+      right: calc(50% - (2% + 65px));
+      top: calc(50% - (4% + 10px + 18pt)/2);
       z-index: 10;
       padding: 2%;
       font-size: 18pt;

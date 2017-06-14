@@ -26,6 +26,12 @@ socket.on('stop', function() {
   player2.stop();
   console.log('you pressed down');
 });
+socket.on('player1', function() {
+  currentPlayer = 'p1';
+});
+socket.on('player2', function() {
+  currentPlayer = 'p2';
+});
 
 //defines Paddles
 class Paddle {
@@ -92,12 +98,14 @@ class Ball {
       }
       if (this.x + this.radius > canvas.width) {
         p1score += 1
+        socket.emit(currentPlayer);
         this.x = canvas.width/2
         this.y = canvas.height/2
         this.dy = Math.floor(this.dy*Math.random());
       }
       if (this.x - this.radius < 0) {
         p2score += 1
+        socket.emit(currentPlayer);
         this.x = canvas.width/2
         this.y = canvas.height/2
         this.dy = Math.floor(this.dy*Math.random());

@@ -38,7 +38,6 @@ io.on('connection', function(client){
     if (index > -1) {
       playerArr.splice(index, 1);
     }
-
   });
 });
 
