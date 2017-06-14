@@ -48,7 +48,6 @@ io.on('connection', function(client){
   });
 
   client.on('start', function() {
-    io.emit('start');
     if(players <= 0){
       players = 1;
     } else {
