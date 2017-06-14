@@ -11,7 +11,7 @@ canvas.height = window.innerHeight;
 
 canvas.style.background = 'black';
 
-// setup socketio
+// socketio listeners
 var socket = io();
 
 socket.on('up', function() {
@@ -124,7 +124,7 @@ class Ball {
     }
   }
 
-// listener section
+// JS listeners
 window.addEventListener('touchmove', function(event) {
   if (event.offsetY > player1.y + player1.height/2) {
     player1.dy = player1.speed;
