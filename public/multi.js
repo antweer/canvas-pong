@@ -9,6 +9,10 @@ var currentPlayer;
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+var dw = canvas.width/1000;
+var dh = canvas.height/1000;
+
+
 canvas.style.background = 'black';
 
 // socketio listeners
@@ -45,11 +49,11 @@ class Paddle {
   constructor(x, y, speed) {
     this.x = x;
     this.y = y;
-    this.width = 20;
-    this.height = 150;
+    this.width = 20 * w;
+    this.height = 150 * h;
     this.color = 'white';
     this.dy = 0;
-    this.speed = speed;
+    this.speed = speed * (w + h / 2);
 
   }
 
