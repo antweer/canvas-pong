@@ -15,7 +15,7 @@ canvas.style.background = 'black';
 var socket = io();
 var players = 0;
 socket.on('playerJoined', function(numPlayers){
-  console.log('player joined');
+  console.log(numPlayers);
   if(numPlayers > 1){
     ball.dy = 6;
     ball.dx = 6;
@@ -23,6 +23,7 @@ socket.on('playerJoined', function(numPlayers){
 });
 
 socket.on('playerLeft', function(numPlayers){
+  console.log(numPlayers);
   if(numPlayers <= 1){
     ball.dy = 0;
     ball.dx = 0;
