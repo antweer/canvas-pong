@@ -5,6 +5,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var playerArr = []
+var p1score = 0;
+var p2score = 0;
 
 app.set('view engine', 'hbs');
 
@@ -31,6 +33,22 @@ io.on('connection', function(client){
   client.on('stop', function(){
     client.broadcast.emit('stop');
   });
+
+  client.on('p1', function(){
+    p1score++;
+    io.emit('score', {'p1s':p1score, 'p2s':p2score});
+    console.log('p1 scores');
+  });
+
+  client.on('p2', function(){
+    p2score++;
+    io.emit('score', {'p1s':p1score, 'p2s':p2score});
+    console.log('p2 scores');
+  });
+
+  client.on('start', function() {
+    io.emit('start')
+  })
 
   client.on('disconnect', function () {
     console.log('EXITED');

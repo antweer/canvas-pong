@@ -32,6 +32,13 @@ socket.on('player1', function() {
 socket.on('player2', function() {
   currentPlayer = 'p2';
 });
+socket.on('score', function(data) {
+  p1score = data.p1s;
+  p2score = data.p2s;
+});
+socket.on('start', function() {
+  gameLoop();
+});
 
 //defines Paddles
 class Paddle {
@@ -97,14 +104,12 @@ class Ball {
         this.dx = -this.dx;
       }
       if (this.x + this.radius > canvas.width) {
-        p1score += 1
         socket.emit(currentPlayer);
         this.x = canvas.width/2
         this.y = canvas.height/2
         this.dy = Math.floor(this.dy*Math.random());
       }
       if (this.x - this.radius < 0) {
-        p2score += 1
         socket.emit(currentPlayer);
         this.x = canvas.width/2
         this.y = canvas.height/2
@@ -161,27 +166,31 @@ var player2 = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
 var ball = new Ball(canvas.width/2, canvas.height/2)
 
 start.addEventListener('click', function() {
-    // removes start button
-    start.style.display = 'none'
-
-
-    player1.draw();
-    player2.draw();
-
-    // game loop
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        player1.draw(player1.dy);
-        player2.draw(player2.dy);
-        ball.update();
-
-        ctx.font = "50px Arial"
-        ctx.fillStyle = 'white';
-        ctx.fillText(p1score, 100, 50);
-        ctx.fillText(p2score, canvas.width - 100, 50);
-    }
-
-    animate();
+  socket.emit('start');
 });
+
+function gameLoop() {
+  // removes start button
+  start.style.display = 'none'
+
+
+  player1.draw();
+  player2.draw();
+
+  // game loop
+  function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      player1.draw(player1.dy);
+      player2.draw(player2.dy);
+      ball.update();
+
+      ctx.font = "50px Arial"
+      ctx.fillStyle = 'white';
+      ctx.fillText(p1score, 100, 50);
+      ctx.fillText(p2score, canvas.width - 100, 50);
+  }
+
+  animate();
+}
