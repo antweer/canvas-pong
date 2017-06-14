@@ -100,20 +100,20 @@ class Ball {
       }
       if (this.x + this.radius >= player2.x && this.x - this.radius <= canvas.width - (player2.width + 10)
         && this.y + this.radius >= player2.y && this.y - this.radius <= player2.y + player2.height) {
-        this.dy = this.dy + player1.dy;
+        this.dy = this.dy + player2.dy;
         this.dx = -this.dx;
       }
       if (this.x + this.radius > canvas.width) {
         socket.emit(currentPlayer);
         this.x = canvas.width/2
         this.y = canvas.height/2
-        this.dy = Math.floor(this.dy*Math.random());
+        this.dy = 4;
       }
       if (this.x - this.radius < 0) {
         socket.emit(currentPlayer);
         this.x = canvas.width/2
         this.y = canvas.height/2
-        this.dy = Math.floor(this.dy*Math.random());
+        this.dy = 4;
       }
       if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
         this.dy = -this.dy
@@ -142,19 +142,35 @@ window.addEventListener('touchend', function(event) {
   player1.dy = 0;
 });
 window.addEventListener('keydown', function(event){
-  if (event.keyCode == 38) {
+  if (event.keyCode == 38 && currentPlayer == 'p1') {
     player1.moveup();
     socket.emit('up');
   }
-  else if(event.keyCode == 40) {
+  else if (event.keyCode == 38 && currentPlayer == 'p2') {
+    player2.moveup();
+    socket.emit('up');
+  }
+  else if(event.keyCode == 40 && currentPlayer == 'p1') {
     player1.movedown();
+    socket.emit('down');
+  }
+  else if(event.keyCode == 40 && currentPlayer == 'p2') {
+    player2.movedown();
     socket.emit('down');
   }
 });
 window.addEventListener('keyup', function(event){
-  if (event.keyCode == 38 || event.keyCode == 40) {
-    player1.dy = 0;
-    socket.emit('stop');
+  if (currentPlayer == 'p1') {
+    if (event.keyCode == 38 || event.keyCode == 40) {
+      player1.dy = 0;
+      socket.emit('stop');
+    }
+  }
+  if (currentPlayer == 'p2') {
+    if (event.keyCode == 38 || event.keyCode == 40) {
+      player2.dy = 0;
+      socket.emit('stop');
+    }
   }
 });
 
