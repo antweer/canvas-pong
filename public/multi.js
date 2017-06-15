@@ -22,14 +22,14 @@ var players = 0;
 socket.on('playerJoined', function(numPlayers){
   console.log(numPlayers);
   if(numPlayers > 1){
-    ball.dy = 6;
-    ball.dx = 6;
-    player1.x = 10;
-    player1.y = (canvas.height/2)-75;
-    player1.speed = 8;
-    player2.x = canvas.width - 30;
-    player2.y = (canvas.height/2)-75;
-    player2.speed = 8;
+    ball.dy = 6*dh;
+    ball.dx = 6*dw;
+    player1.x = 10*dw;
+    player1.y = (canvas.height/2)-(75*dh);
+    player1.speed = 8 * (dw + dh)/2;
+    player2.x = canvas.width - 30*dw;
+    player2.y = (canvas.height/2)-(75*dh);
+    player2.speed = 8 * (dw + dh)/2;
     gameLoop();
     gameText = '';
   }
@@ -42,27 +42,33 @@ socket.on('playerLeft', function(numPlayers){
     ball.dx = 0;
     ball.x = canvas.width/2;
     ball.y = canvas.height/2;
-    player1.x = 10;
-    player1.y = (canvas.height/2)-75;
+    player1.x = 10*dw;
+    player1.y = (canvas.height/2)-(75*dh);
     player1.speed = 0;
-    player2.x = canvas.width - 30;
-    player2.y = (canvas.height/2)-75;
+    player2.x = canvas.width - 30*dw;
+    player2.y = (canvas.height/2)-(75*dh);
     player2.speed = 0;
     gameText = 'Player has left. Waiting on another player to join.';
   }
 });
 
 socket.on('up', function() {
-  player2.moveup();
-  console.log('you pressed up');
+  player1.moveup();
 });
 socket.on('down', function() {
-  player2.movedown();
-  console.log('you pressed down');
+  player1.movedown();
 });
 socket.on('stop', function() {
+  player1.stop();
+});
+socket.on('up2', function() {
+  player2.moveup();
+});
+socket.on('down2', function() {
+  player2.movedown();
+});
+socket.on('stop2', function() {
   player2.stop();
-  console.log('you pressed down');
 });
 socket.on('player1', function() {
   currentPlayer = 'p1';
@@ -80,11 +86,11 @@ class Paddle {
   constructor(x, y, speed) {
     this.x = x;
     this.y = y;
-    this.width = 20 * w;
-    this.height = 150 * h;
+    this.width = 20 * dw;
+    this.height = 150 * dh;
     this.color = 'white';
     this.dy = 0;
-    this.speed = speed * (w + h / 2);
+    this.speed = speed * (dw + dh / 2);
 
   }
 
@@ -123,7 +129,7 @@ class Ball {
     this.y = y;
     this.dx = 0;
     this.dy = 0;
-    this.radius = 20;
+    this.radius = 20 * (dw+dh/2);
     this.color = 'white';
   }
 
@@ -142,13 +148,14 @@ class Ball {
         socket.emit(currentPlayer);
         this.x = canvas.width/2;
         this.y = canvas.height/2;
-        this.dy = Math.floor(this.dy*Math.random());
+        // randomize later
+        this.dy = 5*(dw+dh)/2;
       }
       if (this.x - this.radius < 0) {
         socket.emit(currentPlayer);
         this.x = canvas.width/2;
         this.y = canvas.height/2;
-        this.dy = Math.floor(this.dy*Math.random());
+        this.dy = 5*(dw+dh)/2;
       }
       if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
         this.dy = -this.dy;
@@ -177,27 +184,43 @@ window.addEventListener('touchend', function(event) {
   player1.dy = 0;
 });
 window.addEventListener('keydown', function(event){
-  if (event.keyCode == 38) {
+  if (event.keyCode == 38 && currentPlayer == 'p1') {
     player1.moveup();
     socket.emit('up');
   }
-  else if(event.keyCode == 40) {
+  if (event.keyCode == 38 && currentPlayer == 'p2') {
+    player2.moveup();
+    socket.emit('up2');
+  }
+  if(event.keyCode == 40 && currentPlayer == 'p1') {
     player1.movedown();
     socket.emit('down');
   }
+  if(event.keyCode == 40 && currentPlayer == 'p2') {
+    player2.movedown();
+    socket.emit('down2');
+  }
 });
 window.addEventListener('keyup', function(event){
-  if (event.keyCode == 38 || event.keyCode == 40) {
-    player1.dy = 0;
-    socket.emit('stop');
+  if (currentPlayer == 'p1') {
+    if (event.keyCode == 38 || event.keyCode == 40) {
+      player1.dy = 0;
+      socket.emit('stop');
+    }
+  }
+  if (currentPlayer == 'p2') {
+    if (event.keyCode == 38 || event.keyCode == 40) {
+      player2.dy = 0;
+      socket.emit('stop2');
+    }
   }
 });
 
 var start = document.getElementById('start');
 
 //Game logic
-var player1 = new Paddle(10, (canvas.height/2)-75, 8);
-var player2 = new Paddle(canvas.width - 30, (canvas.height/2)-75, 8);
+var player1 = new Paddle(10, (canvas.height/2)-75*dh, 8*(dw+dh)/2);
+var player2 = new Paddle(canvas.width - 30, (canvas.height/2)-75*dh, 8*(dw+dh)/2);
 var ball = new Ball(canvas.width/2, canvas.height/2);
 
 start.addEventListener('click', function() {
@@ -224,9 +247,9 @@ function gameLoop() {
 
       ctx.font = "50px Arial";
       ctx.fillStyle = 'white';
-      ctx.fillText(p1score, 100, 50);
-      ctx.fillText(p2score, canvas.width - 100, 50);
-      ctx.fillText(gameText, 50, canvas.height - 100);
+      ctx.fillText(p1score, 100*dw, 50*dh);
+      ctx.fillText(p2score, canvas.width - 100*dw, 50*dh);
+      ctx.fillText(gameText, 50*dw, canvas.height - 100*dh);
   }
 
   animate();
