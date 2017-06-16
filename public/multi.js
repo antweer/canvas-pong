@@ -7,8 +7,8 @@ var currentPlayer;
 var gameText = 'Waiting on another player to join';
 
 // set canvas width and height to width and height of screen
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = 800;
+canvas.height = 600;
 
 var dw = canvas.width/1000;
 var dh = canvas.height/1000;
