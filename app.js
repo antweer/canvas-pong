@@ -65,6 +65,8 @@ io.on('connection', function(client){
     }
     playerArr.push(client.id);
     client.emit('player' + playerArr.length)
+    p1score = 0;
+    p2score = 0;
     io.emit('playerJoined', players);
   });
 

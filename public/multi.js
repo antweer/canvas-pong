@@ -30,6 +30,8 @@ socket.on('playerJoined', function(numPlayers){
     player2.x = canvas.width - 30*dw;
     player2.y = (canvas.height/2)-(75*dh);
     player2.speed = 8 * (dw + dh)/2;
+    p1score = 0;
+    p2score = 0;
     gameLoop();
     gameText = '';
   }
